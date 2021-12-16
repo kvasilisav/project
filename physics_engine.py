@@ -99,7 +99,7 @@ class Pig:
 
         self.velocity.magnitude *= friction
 
-        if self.x > width - self.r:
+        if self.x > width - 2 * self.r:
             self.x = 2*(width - self.r) - self.x
             self.velocity.angle *= -1
             self.velocity.magnitude *= elasticity
@@ -355,11 +355,11 @@ def collision_handler(b_1, b_2, type):
             b_1.velocity.magnitude *= elasticity
             b_2.velocity.magnitude *= block_elasticity
 
-            #overlap = 0.5*(b_1.r + b_2.w - dist + 1)
-            #b_1.x += sin(angle)*overlap
-            b_1.y -= abs(b_1.y - b_2.y + b_2.w) #cos(angle)*overlap
-            #b_2.x -= sin(angle)*overlap
-            #b_2.y += cos(angle)*overlap
+            overlap = (b_1.r - dist + sin(angle)*b_2.h/2 - 1)
+            b_1.x += sin(angle)*overlap
+            b_1.y -= cos(angle)*overlap + b_1.r
+            b_2.x -= sin(angle)*overlap
+            b_2.y += cos(angle)*overlap
             collision = True
 
         return b_1, b_2, collision
