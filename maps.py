@@ -122,7 +122,7 @@ class Maps:
 
         if self.level == 1:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(800, height - 40, 20))
@@ -132,7 +132,7 @@ class Maps:
 
         elif self.level == 2:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(750, height - 40, 20))
@@ -144,7 +144,7 @@ class Maps:
 
         elif self.level == 3:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(850, height - 60, 30))
@@ -157,7 +157,7 @@ class Maps:
 
         elif self.level == 4:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1200, 500 - 60, 30))
@@ -169,7 +169,7 @@ class Maps:
 
         elif self.level == 5:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1300, 500 - 60, 25))
@@ -183,7 +183,7 @@ class Maps:
 
         elif self.level == 6:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1300, 500 - 60, 25))
@@ -197,7 +197,7 @@ class Maps:
 
         elif self.level == 7:
             for i in range(4):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1100, 500 - 60, 25))
@@ -219,7 +219,7 @@ class Maps:
 
         elif self.level == 9:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1100, height - 60, 25))
@@ -233,7 +233,7 @@ class Maps:
 
         elif self.level == 10:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
             pigs.append(physics_engine.Pig(1100, height - 60, 25))
@@ -437,8 +437,6 @@ class Maps:
         pigs_remaining = interface.Label(110, 90, 100, 50, None, self.color['background'])
         pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        LEvEL = interface.Label(1000, 10, 100, 50, None, self.color['background'])
-        LEvEL.add_text("LEVEL: " + str(self.level), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
         while loop:
             for event in pygame.event.get():
@@ -599,10 +597,6 @@ class Maps:
 
             pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
             pigs_remaining.draw()
-
-            
-            LEvEL.add_text("LEVEL: " + str(self.level), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
-            LEvEL.draw()
 
 
             pygame.display.update()

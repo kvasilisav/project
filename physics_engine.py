@@ -98,22 +98,22 @@ class Pig:
         self.y -= self.velocity.magnitude*cos(self.velocity.angle)
 
         self.velocity.magnitude *= friction
-        #ПЕРЕПИСАТЬ ОТСКОКИ (ПОДУМАТЬ)
+
         if self.x > width - self.r:
             self.x = 2*(width - self.r) - self.x
-            self.velocity.angle = - atan((self.velocity.magnitude * sin(self.velocity.angle) * elasticity) / (self.velocity.magnitude * cos(self.velocity.angle)))
-            self.velocity.magnitude = ((self.velocity.magnitude * sin(self.velocity.angle) * elasticity)**2 + (self.velocity.magnitude * cos(self.velocity.angle))**2)**0.5
+            self.velocity.angle *= -1
+            self.velocity.magnitude *= elasticity
         elif self.x < self.r:
             self.x = 2*self.r - self.x
             self.velocity.angle *= -1
             self.velocity.magnitude *= elasticity
 
-        if self.y > height - self.r:
-            self.y = 2*(height - self.r) - self.y
+        if self.y > height - 3 * self.r:
+            self.y = 2 * (height - 3 * self.r) - self.y
             self.velocity.angle = pi - self.velocity.angle
             self.velocity.magnitude *= elasticity
         elif self.y < self.r:
-            self.y = 2*self.r - self.y
+            self.y = 2 * self.r - self.y
             self.velocity.angle = pi - self.velocity.angle
             self.velocity.magnitude *= elasticity
 
@@ -134,7 +134,7 @@ class Bird(Pig):
         dx = pos[0] - self.x
         dy = pos[1] - self.y
         dist = (dy**2 + dx**2)**0.5
-        if dist < self.r: #это условие того, что мышка наведена на птицу
+        if dist < 2 * self.r: #это условие того, что мышка наведена на птицу
             return True
         
         
@@ -218,7 +218,7 @@ class Block:
 
     def draw(self):
         pygame.transform.rotate(self.image, self.rotateAngle) #поворачивает изображение блока на угол 
-        display.blit(self.image, (self.x - self.w/2, self.y))
+        display.blit(self.image, (self.x - self.w/2, self.y))###
 
     def destroy(self):
         """ функция говорит что ящик сломан """
@@ -312,10 +312,10 @@ def collision_handler(b_1, b_2, type):
             tangent = atan2(dy, dx)
             angle = 0.5*pi + tangent
 
-            angle1 = 2*tangent - b_1.velocity.angle
-            angle2 = 2*tangent - b_2.velocity.angle
+            angle1 = b_1.velocity.angle + pi
+            angle2 = b_1.velocity.angle
 
-            magnitude1 = b_2.velocity.magnitude
+            magnitude1 = b_1.velocity.magnitude / 2
             magnitude2 = b_1.velocity.magnitude
 
             b_1.velocity = Vector(magnitude1, angle1)
@@ -339,14 +339,14 @@ def collision_handler(b_1, b_2, type):
         dy = b_1.y - b_2.y
 
         dist = hypot(dx, dy)
-        if dist < b_1.r + b_2.w/2:
+        if abs(b_1.x - b_2.x) < b_2.w/2 + b_1.r and abs(b_1.y - b_2.y) < b_2.h/2 + b_1.r :#dist < b_1.r + b_2.w/2:
             tangent = atan2(dy, dx)
             angle = 0.5*pi + tangent
 
-            angle1 = 2*tangent - b_1.velocity.angle
-            angle2 = 2*tangent - b_2.velocity.angle
+            angle1 = b_1.velocity.angle + pi
+            angle2 = b_1.velocity.angle
 
-            magnitude1 = b_2.velocity.magnitude
+            magnitude1 = b_1.velocity.magnitude / 2
             magnitude2 = b_1.velocity.magnitude
 
             b_1.velocity = Vector(magnitude1, angle1)
@@ -355,11 +355,11 @@ def collision_handler(b_1, b_2, type):
             b_1.velocity.magnitude *= elasticity
             b_2.velocity.magnitude *= block_elasticity
 
-            overlap = 0.5*(b_1.r + b_2.w - dist + 1)
-            b_1.x += sin(angle)*overlap
-            b_1.y -= cos(angle)*overlap
-            b_2.x -= sin(angle)*overlap
-            b_2.y += cos(angle)*overlap
+            #overlap = 0.5*(b_1.r + b_2.w - dist + 1)
+            #b_1.x += sin(angle)*overlap
+            b_1.y -= abs(b_1.y - b_2.y + b_2.w) #cos(angle)*overlap
+            #b_2.x -= sin(angle)*overlap
+            #b_2.y += cos(angle)*overlap
             collision = True
 
         return b_1, b_2, collision
