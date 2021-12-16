@@ -437,7 +437,7 @@ class Maps:
         pigs_remaining = interface.Label(110, 90, 100, 50, None, self.color['background'])
         pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        LEvEL = interface.Label(600, 10, 100, 50, None, self.color['background'])
+        LEvEL = interface.Label(1000, 10, 100, 50, None, self.color['background'])
         LEvEL.add_text("LEVEL: " + str(self.level), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
         while loop:
