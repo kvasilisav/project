@@ -459,6 +459,7 @@ class Maps:
                     mouse_click = False
                     if birds[0].mouse_selected():
                         flag = 0
+                        birds[0].shot = -92
 
             if (not birds[0].loaded) and all_rest(pigs, birds, blocks):
                 print("LOADED!")
@@ -473,8 +474,9 @@ class Maps:
                     birds[0].load(slingshot)
                 flag = 1
 
-            if mouse_click:
+            if mouse_click and birds[0].shot > 1:###
                 birds[0].reposition(slingshot, mouse_click)
+                
 
             if not flag:
                 birds[0].unload()

@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 from math import *
@@ -19,7 +18,7 @@ def init(screen):
     height -= ground
 
 class Slab:
-    def __init__(self, x, y, w, h, color=(255, 255, 255)):
+    def __init__(self, x, y, w, h, color = (255, 255, 255)):
         self.x = x
         self.y = y
         self.w = w
@@ -39,16 +38,16 @@ class Slab:
 
     def collision_manager(self, ball, type="BALL"):
         if type == "BALL":
-            if (ball.y + ball.r > self.y) and (ball.y < self.y + self.h):
-                if (ball.x < self.x + self.w) and (ball.x + ball.r > self.x + self.w):
-                    ball.x = 2*(self.x + self.w) - ball.x
+            if (ball.y + ball.r > self.y) and (ball.y - ball.r < self.y + self.h):#
+                if (ball.x - ball.r < self.x) and (ball.x > self.x):#
+                    ball.x = 2*(self.x - ball.r) - ball.x#
                     ball.velocity.angle = - ball.velocity.angle
                     ball.velocity.magnitude *= physics_engine.elasticity
                 elif ball.x + ball.r > self.x and (ball.x < self.x):
                     ball.x = 2*(self.x - ball.r) - ball.x
                     ball.velocity.angle = - ball.velocity.angle
                     ball.velocity.magnitude *= physics_engine.elasticity
-            if (ball.x + ball.r > self.x) and (ball.x < self.x + self.w):
+            if (ball.x + ball.r > self.x) and (ball.x < self.x + self.w):#
                 if ball.y + ball.r > self.y and ball.y < self.y:
                     ball.y = 2*(self.y - ball.r) - ball.y
                     ball.velocity.angle = pi - ball.velocity.angle
