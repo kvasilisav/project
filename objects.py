@@ -14,18 +14,22 @@ deltah1 = 40
 deltah2 = 15
 
 def init(screen):
+    """параметры экрана"""
     global width, height, display
     display = screen
     (width, height) = display.get_rect().size
     height -= ground
 
 class Slab:
+    """класс стенок"""
     def __init__(self, x, y, w, h, color = (255, 255, 255)):
+        """координаты и параметры стенок"""
         self.x = x
         self.y = y
         self.w = w
         self.h = h
 
+        """условие появления вертикальной или горизонтальной стенки"""
         if self.w > self.h:
             self.image = pygame.image.load("Images/wall_horizontal.png")
         else:
@@ -35,9 +39,11 @@ class Slab:
 
         self.color = color
 
+    """рисовка на поверхности"""
     def draw(self):
         display.blit(self.image, (self.x, self.y))
 
+    """проверка столкновений со стенами"""
     def collision_manager1(self, ball, type="BALL"):
         if type == "BALL":
             r = ball.r + deltah1
@@ -87,7 +93,8 @@ class Slab:
                     block.velocity.magnitude *= physics_engine.elasticity
 
             return block
-        
+
+    """проверка столновений со стенами"""   
     def collision_manager2(self, ball, type="BALL"):
             if type == "BALL":
                 r = ball.r + deltah2
