@@ -48,6 +48,7 @@ def GAME():
             if event.type == pygame.QUIT:
                 close()
             if event.type == pygame.KEYDOWN:
+                """закрыте программы при нажатии клавишы q"""
                 if event.key == pygame.K_q:
                     close()
 
