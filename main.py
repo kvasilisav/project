@@ -36,7 +36,7 @@ def GAME():
     """кнопка, чтобы начать игру"""
     start = interface.Button(200, 400, 300, 100, start_game, (244, 208, 63), (247, 220, 111))
     start.add_text("START GAME", 60, "Fonts/arfmoochikncheez.ttf", background)
-    """кнопка выходаиз игры"""
+    """кнопка выхода из игры"""
     exit = interface.Button(700, 400, 300, 100, close, (241, 148, 138), (245, 183, 177))
     exit.add_text("QUIT", 60, "Fonts/arfmoochikncheez.ttf", background)
 
