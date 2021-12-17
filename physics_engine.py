@@ -82,7 +82,7 @@ class Pig:
         if (self.type == "PIG") and (not self.animate_count%20) and (not self.isDead):
             self.image = random.choice([self.pig1_image, self.pig2_image])
 
-        display.blit(self.image, (self.x - self.r, self.y - self.r))
+        display.blit(self.image, (self.x - self.r, self.y - self.r))###
 
 
     def dead(self):
@@ -100,7 +100,7 @@ class Pig:
         self.velocity.magnitude *= friction
 
         if self.x > width - 2 * self.r:
-            self.x = 2*(width - self.r) - self.x
+            self.x = 2*(width - self.r * 2) - self.x
             self.velocity.angle *= -1
             self.velocity.magnitude *= elasticity
         elif self.x < self.r:
@@ -150,7 +150,7 @@ class Bird(Pig):
             dx = slingshot.x - self.x
             dy = slingshot.y - self.y
             
-            self.velocity.magnitude = int(hypot(dx, dy)/2) #задаем величину скорости
+            self.velocity.magnitude = int(hypot(dx, dy)/8) #задаем величину скорости
             if self.velocity.magnitude > 80:
                 self.velocity.magnitude = 80
             self.velocity.angle = pi/2 + atan2(dy, dx)
@@ -324,7 +324,7 @@ def collision_handler(b_1, b_2, type):
             b_1.velocity.magnitude *= elasticity
             b_2.velocity.magnitude *= elasticity
 
-            overlap = 0.5*(b_1.r + b_2.r - dist + 1)
+            overlap = 0.5*(b_1.r + 2 * b_2.r - dist + 1)
             b_1.x += sin(angle)*overlap
             b_1.y -= cos(angle)*overlap
             b_2.x -= sin(angle)*overlap
@@ -341,13 +341,13 @@ def collision_handler(b_1, b_2, type):
         dist = hypot(dx, dy)
         if abs(b_1.x - b_2.x) < b_2.w/2 + b_1.r and abs(b_1.y - b_2.y) < b_2.h/2 + b_1.r :#dist < b_1.r + b_2.w/2:
             tangent = atan2(dy, dx)
-            angle = 0.5*pi + tangent
+            angle = 0.5 * pi + tangent
 
             angle1 = b_1.velocity.angle + pi
             angle2 = b_1.velocity.angle
 
             magnitude1 = b_1.velocity.magnitude / 2
-            magnitude2 = b_1.velocity.magnitude
+            magnitude2 = b_1.velocity.magnitude / 10
 
             b_1.velocity = Vector(magnitude1, angle1)
             b_2.velocity = Vector(magnitude2, angle2)
@@ -355,14 +355,31 @@ def collision_handler(b_1, b_2, type):
             b_1.velocity.magnitude *= elasticity
             b_2.velocity.magnitude *= block_elasticity
 
-            overlap = (b_1.r - dist + sin(angle)*b_2.h/2 - 1)
-            b_1.x += sin(angle)*overlap
-            b_1.y -= cos(angle)*overlap + b_1.r
-            b_2.x -= sin(angle)*overlap
-            b_2.y += cos(angle)*overlap
+            ###overlap = (b_1.r - dist + sin(angle)*b_2.h / 2 - 1)####overlap = (b_1.r - dist + sin(angle)*b_2.h/2 - 1)
+            #overlap = abs(b_1.r - dist + sin(angle) * b_2.h/2 - 1)
+            overlap = 0.5*(b_1.r + b_2.w - dist + 1)
+            b_1.x += sin(angle)*overlap / 10
+            b_1.y -= cos(angle)*overlap / 10 
+            b_2.x -= sin(angle)*overlap / 10
+            b_2.y += cos(angle)*overlap / 10
             collision = True
+        #if b_1.y < b_2.y and b_2.y - b_1.y < b_1.r + b_1.h / 2
 
         return b_1, b_2, collision
+
+def smash (block, block2):
+    angle1 = block2.velocity.angle
+    angle2 = block.velocity.angle
+
+    magnitude1 = block2.velocity.magnitude
+    magnitude2 = block.velocity.magnitude
+
+    block.velocity = Vector(magnitude1, angle1)
+    block2.velocity = Vector(magnitude2, angle2)
+
+    block.velocity.magnitude *= elasticity / 13
+    block2.velocity.magnitude *= elasticity / 13
+    
 
 def block_collision_handler(block, block2):
     collision = False
@@ -370,11 +387,9 @@ def block_collision_handler(block, block2):
         if (block.x < block2.x + block2.w/2) and (block.x + block.w/2 > block2.x + block2.w/2):
             block.x = 2*(block2.x + block2.w/2) - block.x
             block.velocity.angle = - block.velocity.angle
-            block.rotateAngle = - block.velocity.angle
             block.velocity.magnitude *= block_elasticity
 
             block2.velocity.angle = - block2.velocity.angle
-            block2.rotateAngle = - block2.velocity.angle
             block2.velocity.magnitude *= block_elasticity
             collision = True
 
