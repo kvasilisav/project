@@ -5,6 +5,8 @@ import sys
 import physics_engine
 import objects
 import interface
+from random import randint
+
 
 pygame.init()
 width = None
@@ -23,8 +25,9 @@ def init(screen):
     height -= ground
     interface.init(display)
 
+"""функция, показывающая остановку объектов (для загрузки новой птицы)"""
 def all_rest(pigs, birds, blocks):
-    threshold = 0.15
+    threshold = 0.25
     for pig in pigs:
         if pig.velocity.magnitude >= threshold:
             return False
@@ -43,6 +46,7 @@ def close():
     pygame.quit()
     sys.exit()
 
+"""класс, в котором прописана вся игра"""
 class Maps:
     def __init__(self):
         self.level = 1
@@ -64,6 +68,7 @@ class Maps:
 
         return
 
+    """ проверка победы"""
     def check_win(self, pigs, birds):
         if pigs == []:
             print("WON!")
@@ -72,6 +77,7 @@ class Maps:
             print("LOST!")
             return False
 
+    """пауза"""
     def pause(self):
         pause_text = interface.Label(400, 100, 400, 200, None, self.color['background'])
         pause_text.add_text("GAME PAUSED", 70, "Fonts/Comic_Kings.ttf", (236, 240, 241))
@@ -120,202 +126,224 @@ class Maps:
         walls = []
         self.score = 0
 
+        """прописывание уровней с некоторой рандомизацией"""
         if self.level == 1:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(800, height - 40, 20))
-            pigs.append(physics_engine.Pig(1000, height - 40, 20))
+            m=randint(500, 1000)
+            pigs.append(physics_engine.Pig(m-200, height - 40, 20))
+            pigs.append(physics_engine.Pig(m+150, height - 40, 20))
 
-            blocks.append(physics_engine.Block(1300, height - 60, 60))
+            blocks.append(physics_engine.Block(m, height - 60, 60))
 
         elif self.level == 2:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
+            
+            m=randint(500, 1000)
+            pigs.append(physics_engine.Pig(m-250, height - 40, 20))
+            pigs.append(physics_engine.Pig(m+100, height - 40, 20))
 
-            pigs.append(physics_engine.Pig(750, height - 40, 20))
-            pigs.append(physics_engine.Pig(950, height - 40, 20))
-
-            blocks.append(physics_engine.Block(850, height - 60, 60))
-            blocks.append(physics_engine.Block(850, height - 2*35, 60))
-            blocks.append(physics_engine.Block(750, height - 60, 60))
+            blocks.append(physics_engine.Block(m, height - 60, 60))
+            blocks.append(physics_engine.Block(m, height - 2*35, 60))
+            blocks.append(physics_engine.Block(m+1, height - 60, 60))
 
         elif self.level == 3:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(850, height - 60, 30))
-            pigs.append(physics_engine.Pig(1150, height - 60, 30))
+            m=randint(400, 800)
+            n=randint(250, 300)
 
-            blocks.append(physics_engine.Block(750, height - 100, 100))
-            blocks.append(physics_engine.Block(750, height - 2*60, 100))
-            blocks.append(physics_engine.Block(1000, height - 100, 100))
-            blocks.append(physics_engine.Block(1000, height - 2*60, 100))
+            
+            pigs.append(physics_engine.Pig(m+n/2, height - 60, 20))
+            pigs.append(physics_engine.Pig((m+n+70), height - 60, 20))
+
+            blocks.append(physics_engine.Block(m, height - 100, 60))
+            blocks.append(physics_engine.Block(m, height - 2*60, 60))
+            blocks.append(physics_engine.Block(m+n, height - 100, 60))
+            blocks.append(physics_engine.Block(m+n, height - 2*60, 60))
 
         elif self.level == 4:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1200, 500 - 60, 30))
-            pigs.append(physics_engine.Pig(1300, height - 60, 30))
+            m=randint(250, 700)
+            n=randint(400, 1100)
+            k=randint(m, m+400)
+            pigs.append(physics_engine.Pig(n+80, 500 - 60, 20))
+            pigs.append(physics_engine.Pig(k, height-500, 20))
 
-            walls.append(objects.Slab(1000, 450, 500, 20))
+            walls.append(objects.Slab(m, 350, 500, 20))
 
-            blocks.append(physics_engine.Block(1100, height - 100, 100))
+            blocks.append(physics_engine.Block(n, height - 100, 100))
 
         elif self.level == 5:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1300, 500 - 60, 25))
-            pigs.append(physics_engine.Pig(1300, height - 60, 25))
+            mx=randint(300, 700)
+            my=randint(150, 400)
+            n=randint(400, 1000)
+            pigs.append(physics_engine.Pig(n+200, 440, 20))
+            pigs.append(physics_engine.Pig(n-100, 440, 20))
 
-            walls.append(objects.Slab(500, 400, 100, height - 400))
-            walls.append(objects.Slab(1000, 450, 500, 30))
+            walls.append(objects.Slab(n, 400, 100, height - 400))
+            walls.append(objects.Slab(mx, my, 500, 30))
 
-            blocks.append(physics_engine.Block(1150, 500 - 100, 100))
-            blocks.append(physics_engine.Block(1100, height - 100, 100))
 
         elif self.level == 6:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1300, 500 - 60, 25))
-            pigs.append(physics_engine.Pig(1300, height - 60, 25))
+            mx=randint(400, 750)
+            pigs.append(physics_engine.Pig(mx+200, 440, 20))
+            pigs.append(physics_engine.Pig(mx-200, 440, 20))
 
-            walls.append(objects.Slab(1000, 0, 30, 450))
-            walls.append(objects.Slab(1000, 450, 500, 30))
+            walls.append(objects.Slab(mx, 70, 30, 380))
+            walls.append(objects.Slab(mx, 450, 500, 30))
 
-            blocks.append(physics_engine.Block(1150, 500 - 100, 100))
-            blocks.append(physics_engine.Block(1100, height - 100, 100))
+            blocks.append(physics_engine.Block(mx-20, height - 100, 60))
+            blocks.append(physics_engine.Block(mx+400, height - 100, 10))
 
         elif self.level == 7:
             for i in range(4):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, 500 - 60, 25))
-            pigs.append(physics_engine.Pig(1300, 500 - 60, 25))
-            pigs.append(physics_engine.Pig(1200, height - 60, 25))
+            m=randint(300, 650)
+            n=randint(m+100, m+400)
+            pigs.append(physics_engine.Pig(n-90, 300, 20))
+            pigs.append(physics_engine.Pig(n+100, 300, 20))
+            pigs.append(physics_engine.Pig(n+300, 300, 20))
 
-            walls.append(objects.Slab(1200, 250, 30, 200))
-            walls.append(objects.Slab(1000, 450, 500, 30))
+            walls.append(objects.Slab(n, 200, 30, 200))
+            walls.append(objects.Slab(m, 400, 500, 30))
 
         elif self.level == 8:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1200, height - 60, 25))
+            m=randint(400, 900)
+            pigs.append(physics_engine.Pig(m-200, height - 100, 20))
+            pigs.append(physics_engine.Pig(m+200, height - 100, 20))
 
-            walls.append(objects.Slab(700, 250, 30, height - 250))
+            walls.append(objects.Slab(m-100, 220, 200, 30))
+            walls.append(objects.Slab(m, 250, 30, height - 250))
 
         elif self.level == 9:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            m=randint(500, 900)
+            n=randint(100, 300)
+            pigs.append(physics_engine.Pig(m+200, height - 60, 25))
+            pigs.append(physics_engine.Pig(m-250, height - 60, 25))
 
 
-            blocks.append(physics_engine.Block(1250, height - 100, 100))
-            blocks.append(physics_engine.Block(1250, height - 2*60, 100))
+            blocks.append(physics_engine.Block(m-70, height - 100, 100))
+            blocks.append(physics_engine.Block(m+100, height - 2*60, 100))
 
-            walls.append(objects.Slab(700, 400, 30, height - 400))
+            walls.append(objects.Slab(m, 150, 30, 350))
 
         elif self.level == 10:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            m=randint(400, 700)
+            pigs.append(physics_engine.Pig(m+100, height - 100, 20))
+            pigs.append(physics_engine.Pig(m+400, height - 300, 20))
 
-            blocks.append(physics_engine.Block(1250, height - 100, 100))
-            blocks.append(physics_engine.Block(1250, height - 2*60, 100))
-            blocks.append(physics_engine.Block(900, height - 100, 100))
+            
+            blocks.append(physics_engine.Block(m+300, 380, 60))
+            blocks.append(physics_engine.Block(m, 400, 60))
+            blocks.append(physics_engine.Block(m, 380, 60))
 
-            walls.append(objects.Slab(900, 400, 500, 30))
+            walls.append(objects.Slab(m, 400, 500, 30))
 
         elif self.level == 11:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            m=randint(300,600)
+            pigs.append(physics_engine.Pig(m+100, height - 100, 20))
+            pigs.append(physics_engine.Pig(m+400, height - 100 , 20))
 
-            blocks.append(physics_engine.Block(1250, height - 100, 100))
-            blocks.append(physics_engine.Block(1250, height - 2*60, 100))
+            blocks.append(physics_engine.Block(m+250, height - 200, 100))
+            blocks.append(physics_engine.Block(m+350, height - 150, 100))
 
-            walls.append(objects.Slab(900, 400, 500, 30))
-            walls.append(objects.Slab(900, 400, 30, height - 400))
+            walls.append(objects.Slab(m, 400, 500, 30))
+            walls.append(objects.Slab(m, 400, 30, height - 400))
 
         elif self.level == 12:
             for i in range(3):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            m=randint(400,700)
+            pigs.append(physics_engine.Pig(m+100, height - 60, 20))
+            pigs.append(physics_engine.Pig(m+400, height - 60, 20))
 
-            walls.append(objects.Slab(900, 400, 500, 30))
-            walls.append(objects.Slab(1200, 500, 30, height - 500))
+            walls.append(objects.Slab(m, 400, 500, 30))
+            walls.append(objects.Slab(m+300, 500, 30, height - 500))
 
         elif self.level == 13:
             for i in range(4):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
+            m=randint(500,800)
+            pigs.append(physics_engine.Pig(m, height - 60, 20))
+            pigs.append(physics_engine.Pig(m+100, 400 - 60, 20))
+            pigs.append(physics_engine.Pig(m+300, height - 60, 20))
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1200, 400 - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            blocks.append(physics_engine.Block(m-100, height - 100, 100))
+            blocks.append(physics_engine.Block(m, 500, 100))
 
-            blocks.append(physics_engine.Block(900, height - 100, 100))
-            blocks.append(physics_engine.Block(900, height - 2*60, 100))
-
-            walls.append(objects.Slab(900, 400, 500, 40))
-            walls.append(objects.Slab(1200, 500, 30, height - 500))
+            walls.append(objects.Slab(m-100, 400, 500, 40))
+            walls.append(objects.Slab(m+200, 500, 30, height - 500))
 
         elif self.level == 14:
             for i in range(4):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 60, 25))
-            pigs.append(physics_engine.Pig(1100, 400 - 60, 25))
-            pigs.append(physics_engine.Pig(1450, height - 60, 25))
+            m=randint(350,550)
+            pigs.append(physics_engine.Pig(m+550, 300, 20))
+            pigs.append(physics_engine.Pig(m, 400 - 60, 20))
+            pigs.append(physics_engine.Pig(m+270, 300, 20))
 
-            blocks.append(physics_engine.Block(900, height - 100, 100))
+            blocks.append(physics_engine.Block(m+200, height - 100, 100))
+            blocks.append(physics_engine.Block(m+400, 400 - 100, 100))
 
-            blocks.append(physics_engine.Block(1300, 400 - 100, 100))
-
-            walls.append(objects.Slab(900, 400, 500, 40))
-            walls.append(objects.Slab(900, 0, 30, 400))
+            walls.append(objects.Slab(m, 500, 500, 40))
+            walls.append(objects.Slab(m, 100, 30, 400))
 
         elif self.level == 15:
             for i in range(5):
                 new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
+            m = randint(400,750)
+            pigs.append(physics_engine.Pig(m + 100, height - 60, 20))
+            pigs.append(physics_engine.Pig(m, 400 - 60, 20))
+            pigs.append(physics_engine.Pig(m + 200, height - 60, 20))
 
-            pigs.append(physics_engine.Pig(900, height - 60, 25))
-            pigs.append(physics_engine.Pig(width - 400, 400 - 60, 25))
-            pigs.append(physics_engine.Pig(1700, height - 60, 25))
 
+            walls.append(objects.Slab(m, 400, 30, height - 400))
+            walls.append(objects.Slab(m+200, 500, 30, height - 500))
 
-            walls.append(objects.Slab(800, 400, 30, height - 400))
-            walls.append(objects.Slab(1000, 500, 30, height - 500))
-
-            walls.append(objects.Slab(width - 500, 400, 500, 40))
-            walls.append(objects.Slab(width - 500, 150, 60, 400 - 150))
+            walls.append(objects.Slab(m - 100, 400, 500, 40))
+            walls.append(objects.Slab(m - 100, 150, 60, 400 - 150))
 
 
         self.start_level(birds, pigs, blocks, walls)
@@ -436,6 +464,9 @@ class Maps:
 
         pigs_remaining = interface.Label(110, 90, 100, 50, None, self.color['background'])
         pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
+        
+        LEvEL = interface.Label(1000, 10, 100, 50, None, self.color['background'])
+        LEvEL.add_text("LEVEL: " + str(self.level), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
 
         while loop:
@@ -461,6 +492,7 @@ class Maps:
                         flag = 0
                         birds[0].shot = -92
 
+            """условие загрузки новой птицы в рогатку"""
             if (not birds[0].loaded) and all_rest(pigs, birds, blocks):
                 print("LOADED!")
                 birds.pop(0)
@@ -481,7 +513,6 @@ class Maps:
             if not flag:
                 birds[0].unload()
 
-            #display.fill(self.color['background'])
             color = self.color['background']
             for i in range(3):
                 color = (color[0], color[1] + 10, color[2] + 10)
@@ -537,7 +568,7 @@ class Maps:
                                 pigs[i].dead()
 
                 for wall in walls:
-                    pigs[i] = wall.collision_manager(pigs[i])
+                    pigs[i] = wall.collision_manager1(pigs[i])
 
                 pigs[i].draw()
 
@@ -559,7 +590,7 @@ class Maps:
                     birds[i].project_path()
 
                 for wall in walls:
-                    birds[i] = wall.collision_manager(birds[i])
+                    birds[i] = wall.collision_manager2(birds[i])
 
                 birds[i].draw()
 
@@ -582,13 +613,15 @@ class Maps:
                 blocks[i].move()
 
                 for wall in walls:
-                    blocks[i] = wall.collision_manager(blocks[i], "BLOCK")
+                    blocks[i] = wall.collision_manager2(blocks[i], "BLOCK")
 
                 blocks[i].draw()
 
             for wall in walls:
                 wall.draw()
 
+            
+            """надписи на экране - счет, остаток персонажей и уровень"""
             score_text.add_text("SCORE: " + str(self.score), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
             score_text.draw()
 
@@ -597,6 +630,9 @@ class Maps:
 
             pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
             pigs_remaining.draw()
+            
+            LEvEL.add_text("LEVEL: " + str(self.level), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
+            LEvEL.draw()
 
 
             pygame.display.update()
