@@ -178,11 +178,7 @@ class Bird(Pig):
 
             for point in path:
                 pygame.draw.ellipse(display, self.color, (point[0], point[1], 2, 2)) 
-<<<<<<< HEAD
-                
-	
-=======
->>>>>>> 4e4240a21390ecf855077c3a94b2bbaf0eb9546a
+
 
 
 class Block:
