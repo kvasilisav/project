@@ -129,8 +129,13 @@ class Maps:
         """прописывание уровней с некоторой рандомизацией"""
         if self.level == 1:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
-                birds.append(new_bird)
+                if i < 2:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
+                    birds.append(new_bird)
+                elif i == 2:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD1")
+                    birds.append(new_bird)
+					
 
             m=randint(500, 1000)
             pigs.append(physics_engine.Pig(m-200, height - 40, 20))
@@ -140,8 +145,12 @@ class Maps:
 
         elif self.level == 2:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
-                birds.append(new_bird)
+                if i == 1:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
+                    birds.append(new_bird)
+                else:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD1")
+                    birds.append(new_bird)
             
             m=randint(500, 1000)
             pigs.append(physics_engine.Pig(m-250, height - 40, 20))
@@ -153,8 +162,12 @@ class Maps:
 
         elif self.level == 3:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
-                birds.append(new_bird)
+                if i == 1:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
+                    birds.append(new_bird)
+                else:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD1")
+                    birds.append(new_bird)
 
             m=randint(400, 800)
             n=randint(250, 300)
@@ -170,8 +183,12 @@ class Maps:
 
         elif self.level == 4:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
-                birds.append(new_bird)
+                if i == 0:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
+                    birds.append(new_bird)
+                else:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD1")
+                    birds.append(new_bird)
 
             m=randint(250, 700)
             n=randint(400, 1100)
@@ -185,8 +202,12 @@ class Maps:
 
         elif self.level == 5:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
-                birds.append(new_bird)
+                if i == 1 or i==2:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD")
+                    birds.append(new_bird)
+                else:
+                    new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 10, None, "BIRD1")
+                    birds.append(new_bird)
 
             mx=randint(300, 700)
             my=randint(150, 400)

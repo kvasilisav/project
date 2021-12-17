@@ -59,11 +59,14 @@ class Pig:
         self.pig_dead = pygame.image.load("Images/pig_damaged.png")
 
         self.bird_image = pygame.image.load("Images/bird.png")
+        self.bird1_image = pygame.image.load("Images/bird1.png")
 
         if type == "PIG":
             self.image = random.choice([self.pig1_image, self.pig2_image])
-        else:
+        elif type == "BIRD":
             self.image = self.bird_image
+        elif type == "BIRD1":
+            self.image = self.bird1_image
 
         self.type = type
         self.color = color
@@ -80,7 +83,7 @@ class Pig:
 
         if (self.type == "BIRD") and (not self.loaded):
             for point in self.path:
-                pygame.draw.ellipse(display, self.color, (point[0], point[1], 3, 3), 1) 
+                pygame.draw.ellipse(display, self.color, (point[0], point[1], 3, 3), 1)
 
         if (self.type == "PIG") and (not self.animate_count%20) and (not self.isDead):
             self.image = random.choice([self.pig1_image, self.pig2_image])
@@ -175,6 +178,11 @@ class Bird(Pig):
 
             for point in path:
                 pygame.draw.ellipse(display, self.color, (point[0], point[1], 2, 2)) 
+<<<<<<< HEAD
+                
+	
+=======
+>>>>>>> 4e4240a21390ecf855077c3a94b2bbaf0eb9546a
 
 
 class Block:
